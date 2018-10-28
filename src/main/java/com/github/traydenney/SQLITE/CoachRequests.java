@@ -5,31 +5,36 @@ import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.exception.MissingPermissionsException;
 import org.javacord.api.util.logging.ExceptionLogger;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Connect {
+public class CoachRequests {
 
-    private static Connection c;
+    private static Connection c = null;
     private static Statement stmt = null;
-    private static boolean hasData = false;
+    private static ResultSet rs = null;
+    private static PreparedStatement ps = null;
+
 
 
     public void getTeam(String coach, MessageCreateEvent event) throws ClassNotFoundException, SQLException {
 
         List<String> players = new ArrayList<String>();
 
+        Class.forName("org.sqlite.JDBC");
+        c = DriverManager.getConnection("jdbc:sqlite:SQLiteTest1.db");
+
+
         try {
 
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:SQLiteTest1.db");
-            c.setAutoCommit(false);
+
             System.out.println("Opened database successfully");
 
             stmt = c.createStatement();
 
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM team;" );
+            rs = stmt.executeQuery( "SELECT * FROM team;" );
 
             while ( rs.next() ) {
                 int id = rs.getInt("id");
@@ -61,14 +66,8 @@ public class Connect {
                         .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
             }
 
-
-
-            rs.close();
-            stmt.close();
-            c.close();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
         }
         System.out.println("Operation done successfully");
 
@@ -77,34 +76,45 @@ public class Connect {
 
 
     public void addUser(String coachName, String playerName) throws ClassNotFoundException, SQLException {
+        System.out.println(c);
 
-        if(c == null) {
-            try {
-                // db parameters
-                String url = "jdbc:sqlite:SQLiteTest1.db";
-                // create a connection to the database
-                c = DriverManager.getConnection(url);
-
-                System.out.println("Connection to SQLite has been established.");
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
+        Class.forName("org.sqlite.JDBC");
+        c = DriverManager.getConnection("jdbc:sqlite:SQLiteTest1.db");
 
         try {
 
-            PreparedStatement prepStmt = c.prepareStatement("INSERT INTO team(coach, player) VALUES(?, ?);");
+            System.out.println(c);
+
+            ps = c.prepareStatement("INSERT INTO team(coach, player) VALUES(?, ?);");
 
 
-            prepStmt.setString(1, coachName);
-            prepStmt.setString(2, playerName);
-            prepStmt.executeUpdate();
+            ps.setString(1, coachName);
+            ps.setString(2, playerName);
+            ps.executeUpdate();
+
         } catch (Exception e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
+    }
+
+
+    public void removeUser(String coachName, String playerName) throws ClassNotFoundException, SQLException {
+
+        Class.forName("org.sqlite.JDBC");
+        c = DriverManager.getConnection("jdbc:sqlite:SQLiteTest1.db");
+
+        try {
+
+            ps = c.prepareStatement("DELETE from team WHERE player = ?;");
+
+            ps.setString(1, playerName);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
 
     }
 

@@ -2,18 +2,14 @@ package com.github.traydenney;
 
 import com.github.traydenney.Commands.SmashCommand;
 import com.github.traydenney.Commands.Team;
-import com.github.traydenney.SQLITE.Connect;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
-import com.github.traydenney.Commands.Test;
 import com.github.traydenney.Commands.ScheduleEvent;
-import com.github.traydenney.Smash.Smash;
 
 import com.github.traydenney.SQLITE.DiscordDB;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.sql.ResultSet;
 
 import java.sql.*;
 

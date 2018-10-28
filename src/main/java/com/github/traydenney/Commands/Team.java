@@ -1,17 +1,12 @@
 package com.github.traydenney.Commands;
 
-import com.github.traydenney.SQLITE.Connect;
-import org.javacord.api.DiscordApi;
-import org.javacord.api.entity.channel.ServerChannel;
-import org.javacord.api.entity.message.Message;
+import com.github.traydenney.SQLITE.CoachRequests;
 import org.javacord.api.entity.message.MessageAuthor;
-import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.exception.MissingPermissionsException;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.javacord.api.util.logging.ExceptionLogger;
-import org.javacord.api.event.user.UserEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +19,8 @@ public class Team implements MessageCreateListener {
     String user = "";
     List<User> tagged = new ArrayList<User> ();
     String[] a;
+
+    CoachRequests cr = new CoachRequests();
 
 
     @Override
@@ -42,7 +39,7 @@ public class Team implements MessageCreateListener {
         if(cmd[0].equalsIgnoreCase("!myteam")) {
 
             try {
-                Connect test = new Connect();
+                CoachRequests test = new CoachRequests();
                 test.getTeam(author.getName(), event);
 
 
@@ -52,6 +49,8 @@ public class Team implements MessageCreateListener {
 
 
         }
+
+        if(cmd[0].equalsIgnoreCase("!removeplayer")) removePlayerFromDB(event, author);
     }
 
     public void addMember(User user, MessageAuthor author) {
@@ -67,8 +66,8 @@ public class Team implements MessageCreateListener {
         // TODO: Send mentioned player and author to sqlite class to populate DB
 
         try {
-            Connect test = new Connect();
-            test.addUser(author.getName(), user.getNicknameMentionTag());
+
+            cr.addUser(author.getName(), user.getNicknameMentionTag());
 
 
         } catch(Exception e) {
@@ -80,7 +79,26 @@ public class Team implements MessageCreateListener {
         event.getChannel().sendMessage(user.getNicknameMentionTag()+ " has been added to the team")
                 .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
 
-        System.out.println(user.getNicknameMentionTag());
+    }
+
+
+    private void removePlayerFromDB(MessageCreateEvent event, MessageAuthor author) {
+        User user = event.getMessage().getMentionedUsers().get(0);
+
+
+        try {
+            cr.removeUser(author.getName(), user.getNicknameMentionTag());
+
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+        event.getChannel().sendMessage(user.getNicknameMentionTag()+ " has been removed from your team")
+                .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
+
     }
 
     // ADD CHECK TO SEE IF THE USER IS A COACH OR NOT, RETURN TRUE OR FALSE
