@@ -64,7 +64,7 @@ public class Commands implements MessageCreateListener {
 
         if (cmd[0].equalsIgnoreCase("!coach")) {
             CoachCommands cc = new CoachCommands();
-            cc.addCoachRole(user, server);
+            cc.addCoachRole(user, server, event);
         }
 
 
