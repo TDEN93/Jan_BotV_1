@@ -10,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoachRequests {
+public class SQLCommands {
 
     private static Connection c = null;
     private static Statement stmt = null;
@@ -18,6 +18,56 @@ public class CoachRequests {
     private static PreparedStatement ps = null;
 
 
+
+    public void players(String coach, MessageCreateEvent event) throws ClassNotFoundException, SQLException {
+
+        List<String> players = new ArrayList<String>();
+
+        Class.forName("org.sqlite.JDBC");
+        c = DriverManager.getConnection("jdbc:sqlite:SQLiteTest1.db");
+
+
+        try {
+
+            ps = c.prepareStatement("SELECT * from team WHERE coach=?;");
+
+
+            ps.setString(1, coach);
+            rs  = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String coachName = rs.getString("coach");
+                String playerName = rs.getString("player");
+
+                players.add(playerName);
+            }
+
+            String[] playerArray = players.toArray(new String[players.size()]);
+
+            // TODO: Make this more efficient
+
+            if(playerArray.length == 4) {
+                event.getChannel().sendMessage("Your team consists of " + playerArray[0] + ", " + playerArray[1] + ", " + playerArray[2] + ", " + playerArray[3])
+                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
+            } else if(playerArray.length == 3) {
+                event.getChannel().sendMessage("Your team consists of " + playerArray[0] + ", " + playerArray[1] + ", " + playerArray[2])
+                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
+            } else if(playerArray.length == 2) {
+                event.getChannel().sendMessage("Your team consists of " + playerArray[0] + ", " + playerArray[1])
+                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
+            } else if(playerArray.length == 1) {
+                event.getChannel().sendMessage("Your team consists of " + playerArray[0])
+                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
+            } else {
+                event.getChannel().sendMessage("You don't have any players")
+                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
+            }
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+
+    }
 
     public void getTeam(String coach, MessageCreateEvent event) throws ClassNotFoundException, SQLException {
 
@@ -80,6 +130,8 @@ public class CoachRequests {
 
         Class.forName("org.sqlite.JDBC");
         c = DriverManager.getConnection("jdbc:sqlite:SQLiteTest1.db");
+
+        // TODO: Sort in alphabetical order
 
         try {
 

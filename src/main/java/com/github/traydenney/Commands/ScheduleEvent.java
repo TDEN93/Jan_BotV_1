@@ -34,7 +34,7 @@ public class ScheduleEvent implements MessageCreateListener {
 //            });
 //            // Keep in mind that messages can also be sent as private messages
 //            event.getMessage().getServer()
-//                    .ifPresent(server -> embed.addField("Team Manager", "God", true));
+//                    .ifPresent(server -> embed.addField("TeamCommands Manager", "God", true));
             // Send the embed. It logs every exception, besides missing permissions (you are not allowed to send message in the channel)
             event.getChannel().sendMessage(embed)
                     .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));

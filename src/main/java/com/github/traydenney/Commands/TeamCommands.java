@@ -1,69 +1,38 @@
 package com.github.traydenney.Commands;
 
-import com.github.traydenney.SQLITE.CoachRequests;
+import com.github.traydenney.SQLITE.SQLCommands;
+
 import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.entity.permission.Role;
+
+import org.javacord.api.entity.server.ServerUpdater;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.exception.MissingPermissionsException;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.javacord.api.util.logging.ExceptionLogger;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.Collection;
 
 
+public class TeamCommands {
 
-public class Team implements MessageCreateListener {
+    private SQLCommands cr = new SQLCommands();
 
-    String msg = "";
-    String user = "";
-    List<User> tagged = new ArrayList<User> ();
-    String[] a;
-
-    CoachRequests cr = new CoachRequests();
-
-
-    @Override
-    public void onMessageCreate(MessageCreateEvent event) {
-        // Get user's message
-        msg = event.getMessage().getContent();
-
-        //Split message to get argument
-        String[] cmd = msg.split("\\s+");
-        MessageAuthor author = event.getMessage().getAuthor();
-
-
-        if(cmd[0].equalsIgnoreCase("!addplayer")) addPlayerToDB(event, author);
-
-
-        if(cmd[0].equalsIgnoreCase("!myteam")) {
-
-            try {
-                CoachRequests test = new CoachRequests();
-                test.getTeam(author.getName(), event);
-
-
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-
-
-        }
-
-        if(cmd[0].equalsIgnoreCase("!removeplayer")) removePlayerFromDB(event, author);
-    }
-
-    public void addMember(User user, MessageAuthor author) {
+    private void addMember(User user, MessageAuthor author) {
 
         user.sendMessage("You have been added to the team by " + author.getDiscriminatedName());
 
     }
 
-    private void addPlayerToDB(MessageCreateEvent event, MessageAuthor author) {
+    public void addPlayerToDB(MessageCreateEvent event, MessageAuthor author) {
         User user = event.getMessage().getMentionedUsers().get(0);
         addMember(user, author);
 
         // TODO: Send mentioned player and author to sqlite class to populate DB
+        // TODO: Get all mentioned users
+        // TODO: Make it so that you cannot add yourself or a player that is already in team
 
         try {
 
@@ -82,7 +51,7 @@ public class Team implements MessageCreateListener {
     }
 
 
-    private void removePlayerFromDB(MessageCreateEvent event, MessageAuthor author) {
+    public void removePlayerFromDB(MessageCreateEvent event, MessageAuthor author) {
         User user = event.getMessage().getMentionedUsers().get(0);
 
 
@@ -94,13 +63,25 @@ public class Team implements MessageCreateListener {
             e.printStackTrace();
         }
 
-
-
         event.getChannel().sendMessage(user.getNicknameMentionTag()+ " has been removed from your team")
                 .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
 
     }
 
+
+    public void notifyTeam(MessageCreateEvent event, MessageAuthor author) {
+        // TODO: Make this work
+        try {
+            cr.getTeam(author.getName(), event);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+//        user.sendMessage("You have been added to the team by " + author.getDiscriminatedName());
+
+
+    }
     // ADD CHECK TO SEE IF THE USER IS A COACH OR NOT, RETURN TRUE OR FALSE
 }
 
