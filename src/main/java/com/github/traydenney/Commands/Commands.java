@@ -5,9 +5,12 @@ import org.javacord.api.entity.message.MessageAuthor;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
+import org.javacord.api.exception.MissingPermissionsException;
 import org.javacord.api.listener.message.MessageCreateListener;
+import org.javacord.api.util.logging.ExceptionLogger;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class Commands implements MessageCreateListener {
 
@@ -36,9 +39,7 @@ public class Commands implements MessageCreateListener {
         if(event.getMessageAuthor().asUser().isPresent()) {
             user = event.getMessageAuthor().asUser().get();
         }
-
-
-
+        
         // Add Player
         if(cmd[0].equalsIgnoreCase("!addplayer")) team.addPlayerToDB(event, author);
         // Remove Player
@@ -52,13 +53,17 @@ public class Commands implements MessageCreateListener {
 
             try {
                 SQLCommands test = new SQLCommands();
-                test.players(author.getName(), event);
+
+                List<String> playerArray = test.team(author.getName(), event);
+
+                //TODO: Clean up code
+                event.getChannel().sendMessage("Your team consists of " + playerArray)
+                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
 
 
             } catch(Exception e) {
                 e.printStackTrace();
             }
-
 
         }
 

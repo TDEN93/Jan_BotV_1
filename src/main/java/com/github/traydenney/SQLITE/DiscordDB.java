@@ -11,21 +11,20 @@ import java.util.List;
 
 public class DiscordDB {
 
-    private static Connection c;
-    private static Statement stmt = null;
-    private static boolean hasData = false;
     private static String token;
 
 
-    public String getToken() throws ClassNotFoundException, SQLException {
-
-
+    public String getToken() {
 
         try {
 
+            Connection c;
+
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:SQLiteTest1.db");
+            c = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
             c.setAutoCommit(false);
+
+            Statement stmt;
 
             stmt = c.createStatement();
 
@@ -42,7 +41,7 @@ public class DiscordDB {
             c.close();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
+
         }
         System.out.println("Token has been sent");
         return token;

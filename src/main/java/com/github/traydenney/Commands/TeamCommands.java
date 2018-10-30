@@ -11,9 +11,11 @@ import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.exception.MissingPermissionsException;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.javacord.api.util.logging.ExceptionLogger;
+import org.javacord.core.entity.user.UserImpl;
 
 import java.sql.SQLException;
 import java.util.Collection;
+
 
 
 public class TeamCommands {
@@ -36,7 +38,7 @@ public class TeamCommands {
 
         try {
 
-            cr.addUser(author.getName(), user.getNicknameMentionTag());
+            cr.addUser(author.getName(), user.getNicknameMentionTag(), user.getIdAsString());
 
 
         } catch(Exception e) {
@@ -72,7 +74,15 @@ public class TeamCommands {
     public void notifyTeam(MessageCreateEvent event, MessageAuthor author) {
         // TODO: Make this work
         try {
-            cr.getTeam(author.getName(), event);
+            String[] players = cr.players(author.getName(), event);
+
+            for(int i = 0; i < players.length; i++ ) {
+                User user = event.getServer().get().getMemberById(players[i]).get();
+                user.sendMessage("Reminder: You are lame!");
+
+
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
