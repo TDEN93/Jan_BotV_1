@@ -2,6 +2,7 @@ package com.github.traydenney.Commands;
 
 import com.github.traydenney.SQLITE.SQLCommands;
 import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.entity.permission.Role;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
@@ -39,40 +40,74 @@ public class Commands implements MessageCreateListener {
         if(event.getMessageAuthor().asUser().isPresent()) {
             user = event.getMessageAuthor().asUser().get();
         }
-        
+
+
         // Add Player
-        if(cmd[0].equalsIgnoreCase("!addplayer")) team.addPlayerToDB(event, author);
-        // Remove Player
-        if(cmd[0].equalsIgnoreCase("!removeplayer")) team.removePlayerFromDB(event, author);
-
-        if(cmd[0].equalsIgnoreCase("!notify")) team.notifyTeam(event, author);
-
-
-        // Return Members Of TeamCommands
-        if(cmd[0].equalsIgnoreCase("!myteam")) {
-
-            try {
-                SQLCommands test = new SQLCommands();
-
-                List<String> playerArray = test.team(author.getName(), event);
-
-                //TODO: Clean up code
-                event.getChannel().sendMessage("Your team consists of " + playerArray)
-                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
-
-
-            } catch(Exception e) {
-                e.printStackTrace();
+        if(cmd[0].equalsIgnoreCase("!addplayer")) {
+            if(hasCoachRole(server, user)) {
+                team.addPlayerToDB(event, author);
+            } else {
+                event.getChannel().sendMessage("You do not have permission to use that command. Please contact Admin");
             }
 
         }
 
-        if (cmd[0].equalsIgnoreCase("!coach")) {
-            CoachCommands cc = new CoachCommands();
-            cc.addCoachRole(user, server, event);
+        // Remove Player
+        if(cmd[0].equalsIgnoreCase("!removeplayer")) {
+            if(hasCoachRole(server, user)) {
+                team.removePlayerFromDB(event, author);
+            } else {
+                event.getChannel().sendMessage("You do not have permission to use that command. Please contact Admin");
+            }
+
+        }
+
+        if(cmd[0].equalsIgnoreCase("!notify")) {
+            if(hasCoachRole(server, user)) {
+                team.notifyTeam(event, author);
+            } else {
+                event.getChannel().sendMessage("You do not have permission to use that command. Please contact Admin");
+            }
+
         }
 
 
+        // Return Members Of TeamCommands
+        if(cmd[0].equalsIgnoreCase("!myteam")) {
+            if(hasCoachRole(server, user)) {
+                try {
+                    SQLCommands test = new SQLCommands();
 
+                    List<String> playerArray = test.team(author.getName(), event);
+
+                    //TODO: Clean up code
+                    event.getChannel().sendMessage("Your team consists of " + playerArray)
+                            .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
+
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                event.getChannel().sendMessage("You do not have permission to use that command. Please contact Admin");
+            }
+        }
+
+
+        if(hasAdminRole(server, user)) {
+            if (cmd[0].equalsIgnoreCase("!coach")) {
+                CoachCommands cc = new CoachCommands();
+                cc.addCoachRole(user, server, event);
+            }
+        } else {
+            event.getChannel().sendMessage("You do not have permission to use that command. Please contact Admin");
+        }
+    }
+
+    private static boolean hasCoachRole(Server server, User user) {
+        return server.getRoles(user).contains(server.getRolesByNameIgnoreCase("Coach").get(0));
+    }
+
+    private static boolean hasAdminRole(Server server, User user) {
+        return server.isAdmin(user);
     }
 }

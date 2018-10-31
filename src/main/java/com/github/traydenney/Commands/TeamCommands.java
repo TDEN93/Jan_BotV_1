@@ -24,7 +24,7 @@ public class TeamCommands {
 
     private void addMember(User user, MessageAuthor author) {
 
-        user.sendMessage("You have been added to the team by " + author.getDiscriminatedName());
+        user.sendMessage("Hey " + user.getName() + "!" + " You were added to " + author.getName() + "'s team! Nice!");
 
     }
 
@@ -75,12 +75,12 @@ public class TeamCommands {
         // TODO: Make this work
         try {
             String[] players = cr.players(author.getName(), event);
+            String msg = event.getMessageContent();
+
 
             for(int i = 0; i < players.length; i++ ) {
                 User user = event.getServer().get().getMemberById(players[i]).get();
-                user.sendMessage("Reminder: You are lame!");
-
-
+                user.sendMessage("Hey " + user.getName() + "! Janice here! Got a message from your coach." + "\n" + "```" + msg.substring(msg.indexOf(' ')) + "```");
 
             }
         } catch (Exception e) {

@@ -33,13 +33,13 @@ public class CoachCommands {
 
             event.getChannel().sendMessage("Role has been created, please type !coach again");
         }
+    }
 
+    public void scheduleReminder() {
 
+    }
 
-
-
-
-
+    public void setNotifcation() {
 
     }
 }
