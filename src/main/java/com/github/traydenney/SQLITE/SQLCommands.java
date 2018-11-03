@@ -1,21 +1,18 @@
 package com.github.traydenney.SQLITE;
 
 import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
-import org.javacord.api.exception.MissingPermissionsException;
-import org.javacord.api.util.logging.ExceptionLogger;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SQLCommands {
 
-    private static Connection c = null;
-    private static Statement stmt = null;
-    private static ResultSet rs = null;
-    private static PreparedStatement ps = null;
+    private static Connection connectToDatabase = null;
+    private static ResultSet resultSet = null;
+    private static PreparedStatement PreparedSQLStatement = null;
     private String[] playerArray;
 
 
@@ -26,21 +23,21 @@ public class SQLCommands {
 
 
         Class.forName("org.sqlite.JDBC");
-        c = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
+        connectToDatabase = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
 
 
         try {
 
-            ps = c.prepareStatement("SELECT * from team WHERE coach=?;");
-            ps.setString(1, coach);
+            PreparedSQLStatement = connectToDatabase.prepareStatement("SELECT * from team WHERE coach=?;");
+            PreparedSQLStatement.setString(1, coach);
 
-            rs  = ps.executeQuery();
+            resultSet = PreparedSQLStatement.executeQuery();
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String coachName = rs.getString("coach");
-                String playerName = rs.getString("player");
-                String playerID = rs.getString("player_id");
+            while (resultSet.next()) {
+                int databaseID = resultSet.getInt("id");
+                String coachName = resultSet.getString("coach");
+                String playerName = resultSet.getString("player");
+                String playerID = resultSet.getString("player_id");
 
                 players.add(playerID);
             }
@@ -78,25 +75,24 @@ public class SQLCommands {
 
 
 
-    public void addUser(String coachName, String playerName, String player_id) throws ClassNotFoundException, SQLException {
-        System.out.println(c);
+    public void addUser(MessageAuthor author, User user) throws ClassNotFoundException, SQLException {
 
         Class.forName("org.sqlite.JDBC");
-        c = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
+        connectToDatabase = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
 
         // TODO: Sort in alphabetical order
 
         try {
 
-            System.out.println(c);
+            System.out.println(connectToDatabase);
 
-            ps = c.prepareStatement("INSERT INTO team(coach, player, player_id) VALUES(?, ?, ?);");
+            PreparedSQLStatement = connectToDatabase.prepareStatement("INSERT INTO team(coach, player, player_id) VALUES(?, ?, ?);");
 
 
-            ps.setString(1, coachName);
-            ps.setString(2, playerName);
-            ps.setString(3, player_id);
-            ps.executeUpdate();
+            PreparedSQLStatement.setString(1, author.getName());
+            PreparedSQLStatement.setString(2, user.getNicknameMentionTag());
+            PreparedSQLStatement.setString(3, user.getIdAsString());
+            PreparedSQLStatement.executeUpdate();
 
         } catch (Exception e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -108,15 +104,15 @@ public class SQLCommands {
     public void removeUser(String coachName, String playerName) throws ClassNotFoundException, SQLException {
 
         Class.forName("org.sqlite.JDBC");
-        c = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
+        connectToDatabase = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
 
         try {
 
-            ps = c.prepareStatement("DELETE from team WHERE player = ?;");
+            PreparedSQLStatement = connectToDatabase.prepareStatement("DELETE from team WHERE player = ?;");
 
-            ps.setString(1, playerName);
+            PreparedSQLStatement.setString(1, playerName);
 
-            ps.executeUpdate();
+            PreparedSQLStatement.executeUpdate();
 
         } catch (Exception e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -129,18 +125,18 @@ public class SQLCommands {
 
 
         Class.forName("org.sqlite.JDBC");
-        c = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
+        connectToDatabase = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
 
 
         try {
 
-            ps = c.prepareStatement("SELECT player from team WHERE coach=?;");
-            ps.setString(1, coach);
+            PreparedSQLStatement = connectToDatabase.prepareStatement("SELECT player from team WHERE coach=?;");
+            PreparedSQLStatement.setString(1, coach);
 
-            rs  = ps.executeQuery();
+            resultSet = PreparedSQLStatement.executeQuery();
 
-            while (rs.next()) {
-                String playerName = rs.getString("player");
+            while (resultSet.next()) {
+                String playerName = resultSet.getString("player");
 
 
                 players.add(playerName);

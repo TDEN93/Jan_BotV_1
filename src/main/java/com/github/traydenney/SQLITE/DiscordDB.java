@@ -1,44 +1,37 @@
 package com.github.traydenney.SQLITE;
 
-import org.javacord.api.entity.message.MessageAuthor;
-import org.javacord.api.event.message.MessageCreateEvent;
-import org.javacord.api.exception.MissingPermissionsException;
-import org.javacord.api.util.logging.ExceptionLogger;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DiscordDB {
 
     private static String token;
 
 
-    public String getToken() {
+    public String getDiscordAuthToken() {
 
         try {
 
-            Connection c;
+            Connection connectToDatabase;
 
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
-            c.setAutoCommit(false);
+            connectToDatabase = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
+            connectToDatabase.setAutoCommit(false);
 
-            Statement stmt;
+            Statement sqlStatement;
 
-            stmt = c.createStatement();
+            sqlStatement = connectToDatabase.createStatement();
 
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM discord;" );
+            ResultSet resultSet = sqlStatement.executeQuery( "SELECT * FROM discord;" );
 
-            while ( rs.next() ) {
-                token = rs.getString("token");
+            while ( resultSet.next() ) {
+                token = resultSet.getString("token");
             }
 
 
 
-            rs.close();
-            stmt.close();
-            c.close();
+            resultSet.close();
+            sqlStatement.close();
+            connectToDatabase.close();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 

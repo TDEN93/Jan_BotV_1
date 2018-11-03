@@ -1,28 +1,25 @@
 package com.github.traydenney.Commands;
 
-import org.javacord.api.entity.message.MessageAuthor;
 import org.javacord.api.entity.permission.Role;
 import org.javacord.api.entity.permission.RoleBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
-import org.javacord.api.event.message.MessageEvent;
-import org.javacord.api.event.server.role.UserRoleAddEvent;
-import org.javacord.api.listener.message.MessageCreateListener;
+
 
 import java.awt.*;
 
 public class CoachCommands {
 
+    private long coachRoleID = Long.parseLong("506171081309028364");
+    private User user;
+    private Role role;
 
-    public void addCoachRole(User user, Server server, MessageEvent event) {
-
-        long coachRoleID = Long.parseLong("506171081309028364");
-
-
+    public void addCoachRole(Server server, MessageCreateEvent event) {
+        user = event.getMessage().getMentionedUsers().get(0);
 
         if(!server.getRolesByNameIgnoreCase("Coach").isEmpty()) {
-           Role role = server.getRolesByNameIgnoreCase("Coach").get(0);
+           role = server.getRolesByNameIgnoreCase("Coach").get(0);
            server.addRoleToUser(user,role);
 
         } else {
@@ -30,8 +27,6 @@ public class CoachCommands {
             rb.setName("Coach");
             rb.setColor(Color.CYAN);
             rb.create();
-
-            event.getChannel().sendMessage("Role has been created, please type !coach again");
         }
     }
 
