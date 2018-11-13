@@ -23,6 +23,7 @@ public class Commands implements MessageCreateListener {
     public void onMessageCreate(MessageCreateEvent event)  {
 
         TeamCommands team = new TeamCommands();
+        System.out.println("test2");
         // Get currentEventUser's message
         currentEventMessage = event.getMessage().getContent();
         // Get Message Author
@@ -77,6 +78,7 @@ public class Commands implements MessageCreateListener {
                     //TODO: Clean up code
                     event.getChannel().sendMessage("Your team consists of " + playerArray)
                             .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
+
 
                 } catch(Exception e) {
                     e.printStackTrace();

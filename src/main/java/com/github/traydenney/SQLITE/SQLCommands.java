@@ -15,16 +15,12 @@ public class SQLCommands {
     private static PreparedStatement PreparedSQLStatement = null;
     private String[] playerArray;
 
-
-
     public String[] players(String coach, MessageCreateEvent event) throws ClassNotFoundException, SQLException {
 
         List<String> players = new ArrayList<String>();
 
-
         Class.forName("org.sqlite.JDBC");
         connectToDatabase = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
-
 
         try {
 
@@ -44,36 +40,13 @@ public class SQLCommands {
 
             playerArray = players.toArray(new String[0]);
 
-//
-//
-//            // TODO: Make this more efficient
-//
-//            if(playerArray.length == 4) {
-//                event.getChannel().sendMessage("Your team consists of " + playerArray[0] + ", " + playerArray[1] + ", " + playerArray[2] + ", " + playerArray[3])
-//                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
-//            } else if(playerArray.length == 3) {
-//                event.getChannel().sendMessage("Your team consists of " + playerArray[0] + ", " + playerArray[1] + ", " + playerArray[2])
-//                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
-//            } else if(playerArray.length == 2) {
-//                event.getChannel().sendMessage("Your team consists of " + playerArray[0] + ", " + playerArray[1])
-//                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
-//            } else if(playerArray.length == 1) {
-//                event.getChannel().sendMessage("Your team consists of " + playerArray[0])
-//                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
-//            } else {
-//                event.getChannel().sendMessage("You don't have any players")
-//                        .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
-//            }
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
         //TODO: Return list instead of array to save time
         return playerArray;
-
     }
-
-
 
     public void addUser(MessageAuthor author, User user) throws ClassNotFoundException, SQLException {
 
@@ -84,10 +57,7 @@ public class SQLCommands {
 
         try {
 
-            System.out.println(connectToDatabase);
-
             PreparedSQLStatement = connectToDatabase.prepareStatement("INSERT INTO team(coach, player, player_id) VALUES(?, ?, ?);");
-
 
             PreparedSQLStatement.setString(1, author.getName());
             PreparedSQLStatement.setString(2, user.getNicknameMentionTag());
@@ -97,9 +67,7 @@ public class SQLCommands {
         } catch (Exception e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
-
     }
-
 
     public void removeUser(String coachName, String playerName) throws ClassNotFoundException, SQLException {
 
@@ -117,16 +85,13 @@ public class SQLCommands {
         } catch (Exception e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
-
     }
 
     public List<String> team(String coach, MessageCreateEvent event) throws ClassNotFoundException, SQLException {
         List<String> players = new ArrayList<>();
 
-
         Class.forName("org.sqlite.JDBC");
         connectToDatabase = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
-
 
         try {
 
@@ -138,7 +103,6 @@ public class SQLCommands {
             while (resultSet.next()) {
                 String playerName = resultSet.getString("player");
 
-
                 players.add(playerName);
             }
 
@@ -149,9 +113,4 @@ public class SQLCommands {
         //TODO: Return list instead of array to save time
         return players;
     }
-
-    // TODO: Create a coach/manager table with the values of id, coach, player, date
-
-    // TODO: Create more useful methods to populate DB
-
 }

@@ -1,7 +1,6 @@
 package com.github.traydenney;
 
 import com.github.traydenney.Commands.Commands;
-import com.github.traydenney.Commands.SmashCommand;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import com.github.traydenney.Commands.ScheduleEvent;
@@ -9,6 +8,7 @@ import com.github.traydenney.Commands.ScheduleEvent;
 import com.github.traydenney.SQLITE.DiscordDB;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.user.UserStatus;
+
 
 
 public class Main {
@@ -27,6 +27,7 @@ public class Main {
 
         api.addMessageCreateListener(new Commands());
         api.addMessageCreateListener(new ScheduleEvent());
-        api.addMessageCreateListener(new SmashCommand());
+
+
     }
 }
