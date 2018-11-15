@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+
 }
 
 group 'com.github.traydenney'
@@ -9,9 +10,16 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+
+    maven {
+        url "https://jitpack.io"
+    }
+
 }
 
 dependencies {
     implementation 'org.javacord:javacord:3.0.1'
+    compile "de.btobastian.sdcf4j:sdcf4j-core:v1.0.10"
+    compile "de.btobastian.sdcf4j:sdcf4j-javacord:v1.0.10"
 
 }

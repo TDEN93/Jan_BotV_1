@@ -9,25 +9,24 @@ public class DiscordDB {
 
     public String getDiscordAuthToken() {
 
+
         try {
 
             Connection connectToDatabase;
 
             Class.forName("org.sqlite.JDBC");
-            connectToDatabase = DriverManager.getConnection("jdbc:sqlite:jan_db.db");
+            connectToDatabase = DriverManager.getConnection("jdbc:sqlite:JaniceDataBase.db");
+
             connectToDatabase.setAutoCommit(false);
 
             Statement sqlStatement;
 
             sqlStatement = connectToDatabase.createStatement();
 
-            ResultSet resultSet = sqlStatement.executeQuery( "SELECT * FROM discord;" );
+            ResultSet resultSet = sqlStatement.executeQuery( "SELECT * FROM Discord;" );
 
-            while ( resultSet.next() ) {
-                token = resultSet.getString("token");
-            }
-
-
+            resultSet.next();
+            token = resultSet.getString("token");
 
             resultSet.close();
             sqlStatement.close();
