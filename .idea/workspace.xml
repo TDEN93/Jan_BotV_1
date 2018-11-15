@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46071724-6535-4742-b64a-efe543c89016" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.8/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.8/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.8/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/github/traydenney/Commands/Commands.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/github/traydenney/Commands/ScheduleEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/github/traydenney/Commands/TeamCommands.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/github/traydenney/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/github/traydenney/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/github/traydenney/SQLITE/DiscordDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/github/traydenney/SQLITE/DiscordDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/github/traydenney/SQLITE/SQLCommands.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/github/traydenney/SQLITE/SQLCommands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/traydenney/Commands/Commands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/traydenney/Commands/ScheduleEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/traydenney/Commands/TeamCommands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/traydenney/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/traydenney/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/traydenney/SQLITE/DiscordDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/traydenney/SQLITE/DiscordDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/traydenney/SQLITE/SQLCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/traydenney/SQLITE/SQLCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -50,23 +35,24 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="gitignore" value="1" />
+          <entry key="gitignore" value="2" />
           <entry key="gradle" value="6" />
-          <entry key="java" value="72" />
+          <entry key="java" value="73" />
           <entry key="kt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Groovy" value="6" />
-          <entry key="JAVA" value="72" />
+          <entry key="JAVA" value="73" />
           <entry key="Kotlin" value="1" />
-          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="PLAIN_TEXT" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="357" />
+          <entry key="gitignore" value="6" />
           <entry key="gradle" value="57" />
           <entry key="java" value="23993" />
           <entry key="txt" value="52" />
@@ -76,7 +62,7 @@
         <counts>
           <entry key="Groovy" value="57" />
           <entry key="JAVA" value="23993" />
-          <entry key="PLAIN_TEXT" value="409" />
+          <entry key="PLAIN_TEXT" value="415" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -84,14 +70,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/github/traydenney/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+            <state relative-caret-position="643">
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/github/traydenney/Commands/CoachCommands.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="534">
+              <caret line="62" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -465,6 +472,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/github/traydenney/SQLITE/SQLCommands.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/github/traydenney/Commands/NotifyPlayers.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/github/traydenney/Main.java" />
+        <option value="$PROJECT_DIR$/src/.gitignore" />
       </list>
     </option>
   </component>
@@ -497,45 +505,6 @@
             </path>
             <path>
               <item name="Jan_Bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JaniceBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="Jan_Bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JaniceBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Jan_Bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JaniceBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="traydenney" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Jan_Bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JaniceBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="traydenney" type="462c0819:PsiDirectoryNode" />
-              <item name="Commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Jan_Bot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JaniceBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="traydenney" type="462c0819:PsiDirectoryNode" />
-              <item name="SQLITE" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Jan_Bot" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
@@ -547,7 +516,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542291337223" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542291524974" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/sqlite-jdbc-3.23.1.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -627,7 +596,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15724947" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15724947" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -636,7 +605,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" weight="0.23644252" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49840087" visible="true" weight="0.2505423" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49840087" visible="true" weight="0.2505423" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" weight="0.18004338" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -776,16 +745,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/traydenney/Commands/CoachCommands.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="583">
-          <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/github/traydenney/Util/RoleUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -884,11 +843,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/github/traydenney/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+        <state relative-caret-position="643">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/github/traydenney/Commands/CoachCommands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="62" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
         </state>
       </provider>
     </entry>
