@@ -8,32 +8,35 @@ import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 
-public class RemovePlayer implements CommandExecutor {
+public class SetTeamName implements CommandExecutor {
 
     private Server server;
     private User user;
 
 
-    @Command(aliases = {"!remove"}, description = "Removes tagged player to the team")
+    @Command(aliases = {"!setname"}, description = "Sets the team name")
     public void onCommand(DiscordApi api, Message message) {
         server = message.getServer().get();
         user = message.getAuthor().asUser().get();
 
         SQLCommands sqlCall = new SQLCommands();
 
+        //TODO: Potentially breaks when coach sets name before adding players?
         if(hasCoachRole()){
             try {
-                sqlCall.removeUser(user, message.getMentionedUsers().get(0), server.getId());
+                sqlCall.setTeamName(user, message.getContent().substring(message.getContent().indexOf(' ')), server.getId());
+
             } catch (Exception e) {
 
             }
         } else {
             message.getChannel().sendMessage("You do not have permission to use that command. Please contact Admin");
         }
+
+
     }
 
     private boolean hasCoachRole() {
         return server.getRoles(user).contains(server.getRolesByNameIgnoreCase("Coach").get(0));
     }
-
 }

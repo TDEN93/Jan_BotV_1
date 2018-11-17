@@ -25,10 +25,11 @@ public class NotifyPlayers implements CommandExecutor {
             try {
                 SQLCommands sqlCall = new SQLCommands();
 
-                String[] playerArray = sqlCall.players(user);
+                String[] playerArray = sqlCall.getPlayers(user, server.getId());
 
                 for(int i = 0; i < playerArray.length; i++) {
                     server.getMemberById(playerArray[i]).get().sendMessage("Hey " + user.getName() + "! Janice here! Got a message from your coach." + "\n" + "```" + message.getContent().substring(message.getContent().indexOf(' ')) + "```");
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();

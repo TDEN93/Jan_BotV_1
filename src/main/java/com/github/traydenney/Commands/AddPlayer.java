@@ -26,7 +26,10 @@ public class AddPlayer implements CommandExecutor {
 
         if(hasCoachRole()){
             try {
-                sqlCall.addUser(user, message.getMentionedUsers().get(0));
+                sqlCall.addUser(user, message.getMentionedUsers().get(0), server.getId());
+                message.getMentionedUsers().get(0).sendMessage("Hey " + message.getMentionedUsers().get(0).getName() + " ! You have been added to " +
+                                                                    user.getName() + "'s team on the " + server.getName() + " server. Congratulations!");
+
             } catch (Exception e) {
 
             }

@@ -24,11 +24,14 @@ public class Main {
         api.updateStatus(UserStatus.ONLINE);
 
         System.out.println("Bot has successfully started");
+        System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());
 
         cmdHandler.registerCommand(new MyTeam());
         cmdHandler.registerCommand(new AddPlayer());
         cmdHandler.registerCommand(new RemovePlayer());
         cmdHandler.registerCommand(new NotifyPlayers());
+        cmdHandler.registerCommand(new AddCoach());
+        cmdHandler.registerCommand(new SetTeamName());
 
     }
 }

@@ -17,7 +17,7 @@ public class SQLCommands {
     private String[] playerArray;
 
 
-    public String[] players(User author) throws ClassNotFoundException, SQLException {
+    public String[] getPlayers(User author, Long server_id) throws ClassNotFoundException, SQLException {
 
         List<String> players = new ArrayList<String>();
 
@@ -26,15 +26,16 @@ public class SQLCommands {
 
         try {
 
-            PreparedSQLStatement = connectToDatabase.prepareStatement("SELECT * from Teams WHERE coach=?;");
-            PreparedSQLStatement.setString(1, author.getName());
+            PreparedSQLStatement = connectToDatabase.prepareStatement("SELECT * from Teams WHERE server_id=? AND coach=?;");
+            PreparedSQLStatement.setLong(1, server_id);
+            PreparedSQLStatement.setString(2, author.getIdAsString());
 
             resultSet = PreparedSQLStatement.executeQuery();
 
             while (resultSet.next()) {
-                int databaseID = resultSet.getInt("id");
-                String coachName = resultSet.getString("coach");
-                String playerName = resultSet.getString("player");
+//                int databaseID = resultSet.getInt("id");
+//                String coachName = resultSet.getString("coach");
+//                String playerName = resultSet.getString("player");
                 String playerID = resultSet.getString("player_id");
 
                 players.add(playerID);
@@ -50,7 +51,7 @@ public class SQLCommands {
         return playerArray;
     }
 
-    public void addUser(User author, User user) throws ClassNotFoundException, SQLException {
+    public void addUser(User author, User user, Long server_id) throws ClassNotFoundException, SQLException {
 
         Class.forName("org.sqlite.JDBC");
         connectToDatabase = DriverManager.getConnection("jdbc:sqlite:JaniceDataBase.db");
@@ -59,11 +60,12 @@ public class SQLCommands {
 
         try {
 
-            PreparedSQLStatement = connectToDatabase.prepareStatement("INSERT INTO Teams(coach, player, player_id) VALUES(?, ?, ?);");
+            PreparedSQLStatement = connectToDatabase.prepareStatement("INSERT INTO Teams(coach, player, player_id, server_id) VALUES(?, ?, ?, ?);");
 
-            PreparedSQLStatement.setString(1, author.getName());
+            PreparedSQLStatement.setString(1, author.getIdAsString());
             PreparedSQLStatement.setString(2, user.getNicknameMentionTag());
             PreparedSQLStatement.setString(3, user.getIdAsString());
+            PreparedSQLStatement.setLong(4, server_id);
             PreparedSQLStatement.executeUpdate();
 
         } catch (Exception e) {
@@ -71,16 +73,16 @@ public class SQLCommands {
         }
     }
 
-    public void removeUser(User author, User user) throws ClassNotFoundException, SQLException {
+    public void removeUser(User author, User user, Long server_id) throws ClassNotFoundException, SQLException {
 
         Class.forName("org.sqlite.JDBC");
         connectToDatabase = DriverManager.getConnection("jdbc:sqlite:JaniceDataBase.db");
 
         try {
 
-            PreparedSQLStatement = connectToDatabase.prepareStatement("DELETE from Teams WHERE player = ?;");
-
-            PreparedSQLStatement.setString(1, user.getNicknameMentionTag());
+            PreparedSQLStatement = connectToDatabase.prepareStatement("DELETE from Teams WHERE server_id=? AND player=?;");
+            PreparedSQLStatement.setLong(1, server_id);
+            PreparedSQLStatement.setString(2, user.getNicknameMentionTag());
 
             PreparedSQLStatement.executeUpdate();
 
@@ -89,7 +91,7 @@ public class SQLCommands {
         }
     }
 
-    public List<String> team(User author) throws ClassNotFoundException, SQLException {
+    public List<String> getTeam(User author, Long server_id) throws ClassNotFoundException, SQLException {
         List<String> players = new ArrayList<>();
 
         Class.forName("org.sqlite.JDBC");
@@ -97,8 +99,9 @@ public class SQLCommands {
 
         try {
 
-            PreparedSQLStatement = connectToDatabase.prepareStatement("SELECT player from Teams WHERE coach=?;");
-            PreparedSQLStatement.setString(1, author.getName());
+            PreparedSQLStatement = connectToDatabase.prepareStatement("SELECT player from Teams WHERE server_id=? AND coach=?;");
+            PreparedSQLStatement.setLong(1, server_id);
+            PreparedSQLStatement.setString(2, author.getIdAsString());
 
             resultSet = PreparedSQLStatement.executeQuery();
 
@@ -113,5 +116,49 @@ public class SQLCommands {
         }
 
         return players;
+    }
+
+    public void setTeamName(User author, String teamName, Long server_id) throws ClassNotFoundException, SQLException {
+        Class.forName("org.sqlite.JDBC");
+        connectToDatabase = DriverManager.getConnection("jdbc:sqlite:JaniceDataBase.db");
+
+        try {
+
+            PreparedSQLStatement = connectToDatabase.prepareStatement("UPDATE Teams SET team_name=? WHERE server_id=? AND coach=?;");
+            PreparedSQLStatement.setString(1, teamName);
+            PreparedSQLStatement.setLong(2, server_id);
+            PreparedSQLStatement.setString(3, author.getIdAsString());
+            PreparedSQLStatement.executeUpdate();
+
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+    }
+
+    public List<String> getTeamName(User author, Long server_id) throws ClassNotFoundException, SQLException {
+        List<String> team_name = new ArrayList<>();
+
+        Class.forName("org.sqlite.JDBC");
+        connectToDatabase = DriverManager.getConnection("jdbc:sqlite:JaniceDataBase.db");
+
+        try {
+            PreparedSQLStatement = connectToDatabase.prepareStatement("SELECT team_name from Teams WHERE server_id=? AND coach=?;");
+            PreparedSQLStatement.setLong(1, server_id);
+            PreparedSQLStatement.setString(2, author.getIdAsString());
+
+            resultSet = PreparedSQLStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String tn = resultSet.getString("team_name");
+
+                team_name.add(tn);
+            }
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+
+        return team_name;
     }
 }
