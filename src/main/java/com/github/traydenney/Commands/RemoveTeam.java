@@ -8,22 +8,24 @@ import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 
-public class SetTeamName implements CommandExecutor {
+public class RemoveTeam implements CommandExecutor {
 
     private Server server;
     private User user;
 
 
-    @Command(aliases = {"!setname"}, description = "Sets the team name")
+    @Command(aliases = {"!removeteam"}, description = "Sends custom message to all players in your team")
     public void onCommand(DiscordApi api, Message message) {
         server = message.getServer().get();
         user = message.getAuthor().asUser().get();
 
-        SQLCommands sqlCall = new SQLCommands();
 
-        if(hasCoachRole()){
+        if (hasCoachRole()) {
             try {
-                sqlCall.setTeamName(user, message.getContent().substring(message.getContent().indexOf(' ')), server.getId());
+                SQLCommands sqlCall = new SQLCommands();
+
+                sqlCall.removeTeam(user, server.getId());
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

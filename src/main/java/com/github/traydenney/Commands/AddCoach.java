@@ -1,6 +1,6 @@
 package com.github.traydenney.Commands;
 
-import com.github.traydenney.SQLITE.SQLCommands;
+
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import org.javacord.api.DiscordApi;
@@ -28,26 +28,18 @@ public class AddCoach implements CommandExecutor {
             if(server.getRolesByNameIgnoreCase("Coach").isEmpty()) {
                 RoleBuilder roleBuilder = new RoleBuilder(server);
                 roleBuilder.setName("Coach");
-                roleBuilder.setColor(Color.CYAN);
+                roleBuilder.setColor(new Color(147,112,219));
+                roleBuilder.setDisplaySeparately(true);
+                roleBuilder.setMentionable(true);
                 roleBuilder.create();
 
-            } else {
+            }
+
+            if(!server.getRolesByNameIgnoreCase("Coach").isEmpty()) {
                 role = server.getRolesByNameIgnoreCase("Coach").get(0);
                 server.addRoleToUser(message.getMentionedUsers().get(0),role);
             }
 
-
-
-//            if(!server.getRolesByNameIgnoreCase("Coach").isEmpty()) {
-//                role = server.getRolesByNameIgnoreCase("Coach").get(0);
-//                server.addRoleToUser(message.getMentionedUsers().get(0),role);
-//
-//            } else {
-//                RoleBuilder rb = new RoleBuilder(server);
-//                rb.setName("Coach");
-//                rb.setColor(Color.CYAN);
-//                rb.create();
-//            }
         } else {
             message.getChannel().sendMessage("You do not have permission to use that command. Please contact Admin");
         }

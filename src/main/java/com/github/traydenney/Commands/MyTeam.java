@@ -26,15 +26,12 @@ public class MyTeam implements CommandExecutor {
         server = message.getServer().get();
         user = message.getAuthor().asUser().get();
 
-        //TODO: Check server ID and add that to query
-
         if (hasCoachRole()) {
             try {
                 SQLCommands sqlCall = new SQLCommands();
 
                 List<String> playerArray = sqlCall.getTeam(user, server.getId());
                 List<String> teamName = sqlCall.getTeamName(user, server.getId());
-
 
                 if(playerArray.isEmpty()) {
                     message.getChannel().sendMessage("Looks like you don't have a team yet! Try adding them using !add <tag your player>");

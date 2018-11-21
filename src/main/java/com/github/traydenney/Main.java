@@ -32,6 +32,8 @@ public class Main {
         cmdHandler.registerCommand(new NotifyPlayers());
         cmdHandler.registerCommand(new AddCoach());
         cmdHandler.registerCommand(new SetTeamName());
+        cmdHandler.registerCommand(new Replays());
+        cmdHandler.registerCommand(new RemoveTeam());
 
     }
 }
